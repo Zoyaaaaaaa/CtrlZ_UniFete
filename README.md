@@ -1,1 +1,2 @@
 # CtrlZ_UniFete
+A comprehensive platform facilitating event coordination within educational institutions, UniFete integrates approval processes from key authorities like the Principal, Dean of Student Affairs, H.O.D, and Faculty Mentor. It empowers committees to schedule events seamlessly, access venue availability, and engage students campus-wide, ensuring efficient event management and participation.
