@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Notif</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+       
+        
+        
+        <style>
+            :root {
+    --primary: #3062D4;
+    --primary-hover: #001D4A;
+    --important: #F55E5E;
+    --header-height: 5rem;
+    --bg-white: #f8f8ff;
+}
+
+body {
+    font-family: 'Red Hat Display', 
+    sans-serif;
+    background: var(--bg-white);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: fixed;
+    height: var(--header-height);
+    background-color: var(--primary);
+    padding: 0 1rem;
+    width: 100%;
+    display: flex;
+    user-select: none;
+    align-items: center;
+    justify-content: end;
+}
+
+.navigation__group {
+    display: flex;
+    align-items: center;
+}
+
+.icon-wrapper {
+    position: relative;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-wrapper button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color:#ECA400;
+}
+
+.icon-wrapper .icon {
+    width: 2rem;
+    height: 2rem;
+    color: #ECA400;
+}
+
+.icon-wrapper:hover, 
+.icon-wrapper:focus {
+    background-color:#ECA400
+}
+
+
+.notification-mark {
+    position: absolute;
+    display: block;
+    top: 0.45rem;
+    right: 0.45rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background-color: var(--important);
+}
+
+.notifications-top {
+    padding: 1rem;
+    background-color: #ECA400;
+    color: #001D4A;
+}
+
+.notification-item {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    min-height: 6rem;
+    background-color: #FAFBFF;
+    border-top: 1px solid #F1F3F6;
+    transition: all 0.2s ease-in-out;
+    font-family: "Nunito Sans";
+}
+
+.notification-item:hover {
+    background-color:  #E5EEFF;
+}
+
+.notification-item .avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    object-fit: cover;
+}
+
+.notification-item .avatar-wrapper {
+    position: relative;
+}
+
+.notification-item .time {
+    color: #001D4A;
+    font-size: 0.8rem;
+}
+
+.dropdown__wrapper {
+    max-width: 22rem;
+    width: 100%;
+    top: 88px;
+    margin: 0px auto;
+    position: absolute;
+    background: var(--bg-white);
+    border-radius: 0.5rem;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    box-shadow: rgba(99, 99, 99, 0.2) 
+    0px 2px 8px 0px;
+    animation: fadeInAnimation ease-in-out 
+    0.5s forwards;
+    color: #001D4A;
+}
+
+.dropdown__wrapper h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #192028;
+}
+
+.dropdown__wrapper--fade-in {
+    animation: fadeInAnimation ease-in-out 
+    0.5s forwards;
+}
+
+.none {
+    display: none;
+}
+
+.hide {
+    animation: fadeOutAnimation ease-in-out
+     0.5s forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        max-height: 0;
+    }
+    100% {
+        max-height: 40rem;
+    }
+}
+
+@keyframes fadeOutAnimation {
+    0% {
+        max-height: 40rem;
+    }
+    100% {
+        max-height: 0;
+    }
+}
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="navigation__group">
+                
+                <div class="icon-wrapper notifications">
+                    <button type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M5.15837 11.491C5.08489 12.887 5.16936 14.373 3.92213 15.3084C3.34164 15.7438 3 16.427 3 17.1527C3 18.1508 3.7818 19 4.8 19H19.2C20.2182 19 21 18.1508 21 17.1527C21 16.427 20.6584 15.7438 20.0779 15.3084C18.8306 14.373 18.9151 12.887 18.8416 11.491C18.6501 7.85223 15.6438 5 12 5C8.35617 5 5.34988 7.85222 5.15837 11.491Z" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10.5 3.125C10.5 3.95343 11.1716 5 12 5C12.8284 5 13.5 3.95343 13.5 3.125C13.5 2.29657 12.8284 2 12 2C11.1716 2 10.5 2.29657 10.5 3.125Z" stroke="#001d4a" stroke-width="1.5"/>
+                            <path d="M15 19C15 20.6569 13.6569 22 12 22C10.3431 22 9 20.6569 9 19" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                    </button>
+                    <div class="notification-mark notification-mark--pulsing"></div>
+                </div>
+               
+            </div>
+            <div class="dropdown__wrapper hide dropdown__wrapper--fade-in none">
+                <div class="notifications-top">
+                    <h2>Notifications</h2>
+                </div>
+                <div class="notification-items">
+                    <div class="notification-item notification-item--recent">
+                        <div class="avatar-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="#001d4a" stroke-width="1.5"/>
+                                <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                        </div>
+                        <div class="notification-item__body">
+                            <div>
+                                <strong>Jason Alexander</strong> completed <strong>Issue 131</strong>
+                            </div>
+                            <span class="time">
+                                6 min ago
+                            </span>
+                        </div>
+                        <div class="border"></div>
+                    </div>
+                    <div class="notification-item notification-item--recent">
+                        <div class="avatar-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="#001d4a" stroke-width="1.5"/>
+                                <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                        </div>
+                        <div class="notification-item__body">
+                            <div>
+                                <strong>Michelle Claude</strong> opened a new <strong>Issue 152</strong>
+                            </div>
+                            <span class="time">
+                                8 min ago
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="avatar-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="#001d4a" stroke-width="1.5"/>
+                                <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                        </div>
+                        <div class="notification-item__body">
+                            <div>
+                                <strong>Richard Taylor</strong> edited <strong>Road Map 2023</strong>
+                            </div>
+                            <span class="time">
+                                1 week ago
+                            </span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="avatar-wrapper">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="#001d4a" stroke-width="1.5"/>
+                                <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="#001d4a" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                        </div>
+                        <div class="notification-item__body">
+                            <div>
+                                <strong>Jennifer Floyd</strong> created <strong>Road Map 2023</strong>
+                            </div>
+                            <span class="time">
+                                1 week 
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+        </header>
+        
+        <script>
+            const notifications = document.querySelector('.notifications');
+const dropdown = document.querySelector('.dropdown__wrapper');
+
+notifications.addEventListener('click', () => {
+    dropdown.classList.remove('none');
+    dropdown.classList.toggle('hide');
+})
+
+
+document.addEventListener("click", (event) => {
+    const isClickInsideDropdown = dropdown.contains(event.target);
+    const isClicked = notifications.contains(event.target);
+
+    if (!isClickInsideDropdown && !isClicked) {
+        dropdown.classList.add('hide');
+        dropdown.classList.add('dropdown__wrapper--fade-in');
+    }
+});
+        </script>
+    </body>
+</html>
