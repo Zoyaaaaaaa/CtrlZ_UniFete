@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Availability</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400,700&display=swap');
+        html {
+            font-size: 70.5%;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #EAF8BF;
+        }
+
+        .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+      text-align: center; 
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #36395a;
+      margin: 0 1rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.05rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #406dd5;
+    }
+        /* CSS */
+        .btn-list {
+            align-items: center;
+            appearance: none;
+            background-color: #27476E;
+            border-radius: 4px;
+            border-width: 0;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+            rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #ffff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: "Noto sans", sans-serif;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: left;
+            text-decoration: none;
+            transition: box-shadow 0.15s, transform 0.15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow, transform;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 800px; 
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #36395a; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #36395a; 
+        }
+
+        input[type="date"] {
+            width: calc(100% - 20px); 
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #27476E; 
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #406dd5;
+        }
+
+        #venueAvailibility {
+            margin-top: 20px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px; 
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+
+        .unavailable {
+            color: red;
+            font-weight: bold;
+        }
+
+        
+        @media screen and (max-width: 600px) {
+            .navbar {
+                text-align: center;
+            }
+
+            .navbar a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="upcomingevents.html">UpcomingEvent</a>
+        <a href="venueavailability.html">Venue Availability</a>
+        <a href="requestanevent.html">RequestAnEvent</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h1>Venue Availability Check</h1>
+        <label for="eventStart">Event Starts:</label>
+        <input type="date" id="eventStart">
+
+        <label for="eventEnds">Event Ends:</label>
+        <input type="date" id="eventEnds">
+
+        <button onclick="checkAvailability()">Check Availability</button>
+
+        <div id="venueAvailibility">
+            <h2>Available Rooms</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="roomList">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function checkAvailability() {
+            const eventStart = new Date(document.getElementById('eventStart').value);
+            const eventEnds = new Date(document.getElementById('eventEnds').value);
+            const roomList = document.getElementById('roomList');
+
+            // Simulated room availability data
+            const rooms = [
+                { number: '302', available: true },
+                { number: '306', available: false },
+                { number: '404', available: true },
+                { number: '703', available: true },
+                { number: '704', available: false },
+            ];
+
+            
+            roomList.innerHTML = '';
+
+            
+            rooms.forEach(room => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${room.number}</td>
+                    <td class="${room.available ? 'available' : 'unavailable'}">${room.available ? 'Available' : 'Unavailable'}</td>
+                `;
+                roomList.appendChild(row);
+            });
+
+            
+            document.getElementById('venueAvailibility').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
