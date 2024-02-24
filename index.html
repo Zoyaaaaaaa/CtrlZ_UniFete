@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--Code by Divinector (www.divinectorweb.com)-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Responsive Homepage design with Bootstrap and Animate css</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.6.2/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylee.css">    
+
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">UniFete</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#about-section">About Us</a></li>
+                        <li><a href="#faqs">FAQ's</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login / Sign-up<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Sign-up(Student)</a></li>
+                            <li><a href="#">Sign-up(Administrator)</a></li>
+                            
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Login(Student)</a></li>
+                            <li><a href="#">Login(Administrator)</a></li>
+                    </ul>
+                    </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="banner" style="background-image: url(img2.jpg);"></div>
+                    <div class="carousel-caption">
+                        <h2 class="animated bounceInRight" style="animation-delay: 1s">TSEC<span>HACK-A-THON</span></h2>
+                        <h3 class="animated bounceInLeft" style="animation-delay: 2s">Organised by Tsec Codecell</h3>
+                        <p class="animated bounceInRight" style="animation-delay: 3s"><a href="#">Register Now</a></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="banner" style="background-image: url(img1.jpg);"></div>
+                    <div class="carousel-caption">
+                        <h2 class="animated slideInDown" style="animation-delay: 1s">TSEC<span style="color:#001D4A ;">CONCERT FIESTA</span></h2>
+                        <h3 class="animated fadeInUp" style="animation-delay: 2s">Organised by Student Council</h3>
+                        <p class="animated zoomIn" style="animation-delay: 3s"><a href="#">Register Now</a></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="banner" style="background-image: url(img3.jpg);"></div>
+                    <div class="carousel-caption">
+                        <h2 class="animated zoomIn" style="animation-delay: 1s">A<span>BUISNESS SEMINAR</span></h2>
+                        <h3 class="animated fadeInLeft" style="animation-delay: 2s">Organised by IICHE TSEC</h3>
+                        <p class="animated zoomIn" style="animation-delay: 3s"><a href="#">Register Now</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </header>
+    
+    <!--ABOUT-->
+    <section id="about-section">
+        <!-- about left  -->
+        <div class="about-left">
+            <img src="img4.jpg" alt="About Img"/>
+        </div>
+
+        <!-- about right  -->
+        <div class="about-right">
+           
+            <h1><b style="text-decoration: underline;">About Us</b></h1>
+            <p style="padding-top: 15px;">
+                At UniFete, we are driven by a commitment to foster a vibrant and collaborative environment within our educational community. Our platform is dedicated to addressing the intricate challenges faced by student committees during event coordination. We believe in simplifying and enhancing the entire process, allowing committees to focus on creating impactful experiences.
+                
+                From obtaining approvals from key authorities such as the Principal, Dean of Student Affairs, Head of Department (H.O.D), to securing venue permissions and ensuring seamless scheduling, our platform serves as the nexus for efficient and centralized event planning
+                We empower different committees to navigate complex approval processes seamlessly, providing a unified space where they can set up events and obtain necessary approvals from college departments
+            </p>
+            
+        </div>
+    </section>
+    
+    <div id="faqs">
+    <div class="wrapper">
+        
+        <h1 style="color: #EAF8BF; padding-top: 20px; text-decoration: underline;">Frequently Asked Questions</h1>
+  
+        <div class="faq" >
+          <button class="accordion">
+            What is UniFete?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+                
+Centralized platform for student committee coordination and engagement
+          </div>
+        </div>
+  
+        <div class="faq">
+          <button class="accordion">
+            How does it work?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              
+Facilitates committee event planning, approvals, and campus engagement seamlessly through a unified platform.
+            </p>
+          </div>
+        </div>
+       
+        <div class="faq">
+          <button class="accordion">
+            What are the major challanges faced by committees?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+                Navigating approval processes, securing venues, and managing schedules pose major challenges for committees during event coordination.
+            </p>
+          </div>
+        </div>
+  
+        <div class="faq">
+          <button class="accordion">
+            How does the UniFete address the above challanges?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+             
+Our platform simplifies committee event coordination by centralizing approvals, venue management, and scheduling, streamlining the entire process.
+            </p>
+          </div>
+        </div>
+  
+        <div class="faq">
+          <button class="accordion">
+            How can I be a part of UniFete?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+                Access as a student or administrator by logging in to our platform.
+            </p>
+          </div>
+        </div>
+  
+       
+      </div>
+    </div>
+    <!--<div style="background-color:  #001D4A;" ><img src="https://www.freepnglogos.com/uploads/line-png/yellow-orange-line-png-24.png"  style="height: 10px;" width="1400px"></div>-->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#about-section">about us</a></li>
+                       
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#faqs">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">+91 9820245678</a></li>
+                        <li><a href="#">Unifetework@gmail.com</a></li>
+                        <li><a href="#">022 28776485</a></li>
+                        <li><a href="#">103, Churh Mary</a></li>
+                        <li><a href="#">payment options</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Join us</h4>
+                    <ul>
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">Sign-up</a></li>
+                       
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#about-section">Instagram</a></li>
+                       
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="faqs">Twitter</a></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </footer>
+ 
+      <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+  
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            this.parentElement.classList.toggle("active");
+  
+            var pannel = this.nextElementSibling;
+  
+            if (pannel.style.display === "block") {
+              pannel.style.display = "none";
+            } else {
+              pannel.style.display = "block";
+            }
+          });
+        }
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
