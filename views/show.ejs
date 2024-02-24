@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title><%= event.name %> Details</title>
+    <!-- Add your CSS link here -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1><%= event.name %> Details</h1>
+    <p><strong>Description:</strong> <%= event.description %></p>
+    <p><strong>Date:</strong> <%= event.date %></p>
+    <p><strong>Approval Status:</strong> <%= event.approval_status %></p>
+    <!-- Add more event details here -->
+    <!-- Add form to change approval status -->
+    <form action="/events/<%= event._id %>/approval" method="POST">
+        <label for="approvalStatus">Change Approval Status:</label>
+        <select name="approvalStatus">
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .event-list {
+            list-style: none;
+            padding: 0;
+        }
+        .event-item {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .event-item h2 {
+            margin-top: 0;
+        }
+        .event-item p {
+            margin-bottom: 5px;
+        }
+        .event-item .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-primary {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Student Dashboard</h1>
+        <h2>Upcoming Events</h2>
+        <ul class="event-list">
+            <!-- Sample event item -->
+            <li class="event-item">
+                <h2>Event Title</h2>
+                <p>Date: February 28, 2024</p>
+                <p>Time: 10:00 AM - 12:00 PM</p>
+                <p>Venue: Auditorium</p>
+                <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <button class="button button-primary">Register</button>
+            </li>
+            <!-- More event items can be dynamically added here -->
+        </ul>
+    </div>
+</body>
+</html>
