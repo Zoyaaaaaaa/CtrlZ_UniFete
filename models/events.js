@@ -24,6 +24,15 @@ const eventSchema = new mongoose.Schema({
     enum: ['Pending', 'Approved', 'Rejected'],
     default: 'Pending'
   },
+  ocuppancy:{
+    type:Number,
+   required:true,
+  },
+  roomtype:{
+    type:String,
+    enum: ['Confrence', 'Auditorium', 'Labs','Other'],
+    default: 'Other'
+  }
 
 });
 

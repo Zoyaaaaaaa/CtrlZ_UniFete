@@ -448,6 +448,35 @@ nav .profile-details i{
     width: calc(100% - 60px);
   }
 }
+.event-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.approval-status {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.approval-status.approved {
+  color: #28a745;
+  background-color: #d4edda;
+}
+
+.approval-status.pending {
+  color: #ffc107;
+  background-color: #fff3cd;
+}
+
+.approval-status.rejected {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
 </style>
 <body>
 <div class="sidebar">
@@ -457,31 +486,31 @@ nav .profile-details i{
   </div>
   <ul class="nav-links">
     <li>
-      <a href="#" class="active">
+      <a href="committe/dashboard" class="active">
         <i class='bx bx-grid-alt' ></i>
         <span class="links_name">Dashboard</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="/eventlist">
         <i class='bx bx-list-ul' ></i>
         <span class="links_name">List</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="/committee/venueavailability">
         <i class='bx bx-calendar' ></i>
         <span class="links_name">Event Venue</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="/approval">
         <i class='bx bx-user-check'></i>
         <span class="links_name">Faculty Approval</span>
       </a>
     </li>
     <li class="log_out">
-      <a href="#">
+      <a href="/lander">
         <i class='bx bx-log-out'></i>
         <span class="links_name">Log out</span>
       </a>
@@ -494,20 +523,39 @@ nav .profile-details i{
       <i class='bx bx-menu sidebarBtn'></i>
       <span class="dashboard">Dashboard</span>
     </div>
-    <div class="search-box">
+    <!-- <div class="search-box">
       <input type="text" placeholder="Search...">
       <i class='bx bx-search' ></i>
-    </div>
+    </div> -->
     <div class="profile-details">
       <img src="images/profile.jpg" alt="">
-      <span class="admin_name">Prem Shahi</span>
+      <span class="admin_name">Zoya Hassan</span>
       <i class='bx bx-chevron-down' ></i>
     </div>
   </nav>
 
+
+
   <div class="home-content">
-    <!-- Content Goes Here -->
+    <% events.forEach(event => { %>
+      <div class="event-card">
+        <h2><%= event.name %></h2>
+        <p><strong>Event Date:</strong> <%= event.date.toDateString().slice(0, 10) %></p>
+
+        <p><strong>Approval Status:</strong>
+          <span class="approval-status <%= event.approval_status.toLowerCase() %>">
+            <%= event.approval_status %>
+          </span>
+          <!-- You can replace the text above with appropriate icons if needed -->
+        </p>
+        <p><strong>Occupancy:</strong> <%= event.ocuppancy %></p>
+        <p><strong>Room Type:</strong> <%= event.roomtype %></p>
+        <!-- Add other event details as needed -->
+      </div>
+    <% }); %>
   </div>
+  
+  
 </section>
 
 <script>
