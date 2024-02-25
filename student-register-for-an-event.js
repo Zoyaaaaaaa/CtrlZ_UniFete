@@ -40,7 +40,7 @@ app.post("/send_email", function (req, response) {
         to: recipients, 
         subject: 'Thank you for Resgistering',
         html: `
-            <p>Thank you for registering, you will be added to the event group shortly. </p>
+            <p>Thank you for completing the registration process! Your participation is highly valued, and we are currently processing your request to be added to the event group. Rest assured, you will be part of the group shortly. If you have any further questions or need assistance, feel free to reach out. We look forward to your active involvement in the upcoming event!</p>
             <br>
             <p>-UniFete</p>
         `
