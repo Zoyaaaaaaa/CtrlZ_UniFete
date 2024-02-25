@@ -1,62 +1,223 @@
-<%- layout("/layouts/boilerplate") -%>
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <h2 class="text-center mb-4">SignUp for your account</h2>
-      <form action="/signup" method="POST" novalidate class="needs-validation">
-        <div class="mb-3">
-          <label for="username class="form-label">Username</label>
-          <input
-            name="username"
-            placeholder="Add a username"
-            type="text"
-            class="form-control"
-            required
-          />
-        </div>
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input
-            name="email"
-            placeholder="Add an email"
-            type="email"
-            class="form-control"
-            required
-          />
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            background-color: #001D4A;
+        }
 
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input
-            name="password"
-            placeholder="Add a password"
-            type="password"
-            class="form-control"
-            required
-          />
-        </div>
+        body {
+            width: 70vw;
+            background-color: #f8f9fa;
+            font-family: "Nunito Sans", sans-serif;
+            height: 100vh;
+            margin: 30px auto;
+            position: relative;
+            top: -20px;
+        }
 
-        <!-- Dropdown for selecting role -->
-        <div class="mb-3">
-          <label for="role" class="form-label">Role</label>
-          <select name="role" class="form-select" required>
-            <option value="" selected disabled>Select a role</option>
-            <option value="student">Student</option>
-            <option value="committee">Committee</option>
-            <option value="faculty">Faculty</option>
-          </select>
-        </div>
+        .container {
+            margin-top: 5%;
+            width: 70vw;
+        }
 
-        <div class="text-center">
-          <button type="submit" class="btn btn-success">SignUp</button>
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #001D4A;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .btn-success {
+            background-color: #ECA400;
+            color: #fff;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-success:hover {
+            background-color: #006992;
+        }
+
+        .images {
+            display: block;
+            width: 40vw;
+            height: 100vh;
+            position: relative;
+           
+            background: linear-gradient(rgba(236, 164, 0, 0.3), rgba(236, 164, 0, 0.3)),
+                url("https://gentwenty.com/wp-content/uploads/2022/03/naassom-azevedo-Q_Sei-TqSlc-unsplash-scaled.jpg.webp");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .col-md-6 {
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .col-md-6 .fullform {
+            padding: 10px;
+            width: 35vw;
+            margin-top: -30px;
+        }
+
+        .col-md-6 form {
+           position: relative;
+           top: 20px;
+            
+            padding: 30px;
+            width: 30vw;
+           
+           
+        }
+
+        .text-center {
+            text-align: center;
+            font-family: "Nunito Sans", sans-serif;
+            position: relative;
+           top: 25px;
+        }
+
+        .text-center button {
+            font-size: 16px;
+           position: relative;
+           top: -55px;
+        }
+
+        .container .mt-5 .col-md-6 h2 {
+            text-align: center;
+            font-family: "Ubunto", sans-serif;
+          
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .mb-3 input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #ECA400;
+            border-radius: 4px;
+            font-family: "Nunito Sans", sans-serif;
+            font-style: normal;
+            font-size: 16px;
+        }
+        .mb-3 select{
+            width: 65%;
+        padding: 8px;
+         margin-bottom: 16px;
+        box-sizing: border-box;
+        border: 1px solid #ECA400;
+        border-radius: 4px;
+        position: relative;
+        top: -35px;
+        right: -110px;
+        font-size: 14px;
+        font-family: "Nunito Sans";
+        }
+        .mb-3 select::-ms-expand {
+         display: none;
+        }
+
+        .mb-3 select::-webkit-scrollbar {
+        width: 12px;
+        }
+
+        .mb-3 select option {
+         background-color: #fff;
+         color: #ECA400;
+        }
+        .mb-3 select option:hover, select option:focus{
+            background-color: #ECA400;
+        }
+        
+        .mb-3 select:focus,select:hover {
+         border-color: #ECA400;
+        
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="images"></div>
+                <div class="fullform">
+                <h2 class="text-center mb-4">SignUp for your account</h2>
+                <form action="/signup" method="POST" novalidate class="needs-validation">
+                    <div class="mb-3">
+                        <label for="username class=" form-label">Username</label>
+                        <input name="username" placeholder="Add a username" type="text" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input name="email" placeholder="Add an email" type="email" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input name="password" placeholder="Add a password" type="password" class="form-control"
+                            required />
+                    </div>
+
+                    <!-- Dropdown for selecting role -->
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select name="role" class="form-select" required>
+                            <option value="" selected disabled>Select a role</option>
+                            <option value="student">Student</option>
+                            <option value="committee">Committee</option>
+                            <option value="faculty">Faculty</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">SignUp</button>
+                    </div>
+                    
+                   
+                </form>
+            </div>
+            
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-      </form>
+        </div>
     </div>
-  </div>
-</div>
+
+</body>
+
+</html>

@@ -15,7 +15,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const MONGO_URL = "mongodb://127.0.0.1:27017/unifete";
 const userRouter=require("./routes/user.js");
 const { error } = require('console');
-
+const authRole=require("./middleware.js");
+var http = require('http');
+var server = http.Server(app);
+var nodemailer = require('nodemailer');
 main()
   .then(() => {
     console.log("MongoDb is successfully connected");
@@ -50,49 +53,35 @@ app.get("/", (req, res) => {
 app.use((req,res,next)=>{
   res.locals.success=req.flash("success");
   res.locals.error=req.flash("error");
-  // res.locals.curruser=req.user;
+  res.locals.curruser=req.user;
   next();
 })
-function authRole(role){
-  return(req,res,next)=>{
-    if(req.user.role!=role){
-      return res.send("not allowed!")
-    }
-    next();
-  }
-}
-function authUser(req,res,next){
-  if(req.user==null){
 
-  }
-}
-// app.get("/demouser",async(req,res)=>{
-//     let fakeUser=new Student({
-//         email:"az@gmail.com",
-//         username:"Zoiz",
-//     });
-//    let registereduser=await User.register(fakeUser,"hellocode");
-//    console.log(registereduser);
-// })
+
 // Route for student dashboard
 
 app.get("/lander", async (req, res) => {
 res.render("index.ejs");
 });
+app.get("/subscription",async(req,res)=>{
+  res.render("sub.ejs");
+})
 //Route for Student dashBoard
 app.get("/dashboard/student", async (req, res) => {
  
   req.flash("success", "Student dashboard loaded successfully");
-  res.render("studentcommittee.ejs");
+  res.render("dashboardstudent.ejs");
 });
+app.get("/upcomingevents",async (req, res) => {
+  res.render("upcomingevents.ejs");
+  });
 // Route for committee dashboard
-app.get("/dashboard/committee", async (req, res) => {
+app.get("/dashboard/committee",async (req, res) => {
   try {
-    // Fetch events associated with the committee (replace 'committeeId' with actual ID)
+    
     const events = await Event.find({ committee_id:"65d9af4fcd04c37880c941e2" });
 
-    // Render the EJS template and pass event data
-    // res.render("dashboardcommittee.ejs");
+    
     res.render('dashboardcommittee.ejs', { events });
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -102,20 +91,67 @@ app.get("/dashboard/committee", async (req, res) => {
   
 });
 //COMMITTEE DASHBOARD FEATURES
-app.get("/committee/venueavailability", async (req, res) => {
-  res.render("/committee/venueavailabilty.ejs");
-  });
-app.get("/committee/requestevent",async(req,res)=>{
-  res.render("/committee/venueavailabilty.ejs");
+
+app.get("/committee/eventlist",async(req,res)=>{
+  res.render("requestevent.ejs");
 })
-app.get("committee/approval",async(req,res)=>{
-  res.render("committee/approval.ejs");
+app.get("/committee/venue",async(req,res)=>{
+  res.render("venue.ejs");
 })
-app.post('/events/:eventId/approval', async (req, res) => {
+
+app.post('/send_email', async (req, res) => {
+  try {
+    // Save form data to the database
+    const event = new Event({
+      committee_id: req.body.committeeId,
+      name: req.body.name,
+      description: req.body.description,
+      date: req.body.date,
+      ocuppancy: req.body.occupancySize,
+      roomtype: req.body.roomType
+    });
+
+    await event.save();
+
+    // Send email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'urjabahad27@gmail.com',
+        pass: 'vxpbfxincqurlszt'
+      }
+    });
+
+    const mailOptions = {
+      from: 'urjabahad27@gmail.com',
+      to: 'zoyah768@gmail.com',
+      subject: 'New Event Request',
+      text: `New event request: ${req.body.name}`,
+      html: `
+            <p>Committee Name: Codecell</p>
+           
+            <p>Event Description: ${description}</p>
+            <p>Date: ${date}</p>
+            <p>Room Required: ${roomType}</p>
+            <p>Expected Attendees: ${occupancySize}</p>
+            <br>
+          <p>Please check your dashboard for further details and  provide approval</p>
+        `
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.redirect("/dashboard/committee");
+  } catch (error) {
+    console.error('Error processing form submission:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+app.post('/events/:eventId/approval',authRole('faculty'), async (req, res) => {
   const { eventId } = req.params;
   const { approvalStatus } = req.body;
   try {
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId).populate('committee._id');
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
@@ -142,7 +178,7 @@ app.get('/events', async (req, res) => {
 app.get('/events/:eventId', async (req, res) => {
   const { eventId } = req.params;
   try {
-      // Fetch the event by ID from the database
+      // Fetching the event 
       const event = await Event.findById(eventId);
       if (!event) {
           return res.status(404).send('Event not found');
@@ -157,13 +193,13 @@ app.get('/events/:eventId', async (req, res) => {
 // Route for faculty dashboard
 app.get("/dashboard/faculty", async (req, res) => {
   try {
-    // Fetch committees data from the database or wherever it's stored
+    
     const events = await Event.find();
     
-    // Render the dashboardfaculty.ejs template and pass the committees data
+   
     res.render('dashboardfaculty', {events});
   } catch (error) {
-    console.error('Error fetching committees:', error);
+    console.error('Error fetching events:', error);
     res.status(500).send('Internal server error');
   }
 });

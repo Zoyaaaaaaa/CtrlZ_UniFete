@@ -53,7 +53,7 @@ router.get("/logout",async(req,res,next)=>{
           return  next(err);
         }
        // req.flash("success","You logged Out");
-        res.redirect("/listings");
+        res.redirect("/lander");
     })
 })
 // router.get("/add-fake-user", async (req, res) => {

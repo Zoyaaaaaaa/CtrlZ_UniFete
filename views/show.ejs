@@ -9,12 +9,15 @@
 </head>
 
 <body>
-    <h1><%= event.name %> Details</h1>
+   
+
+    <h1><%= event.name %> Event Details</h1>
     <p><strong>Description:</strong> <%= event.description %></p>
     <p><strong>Date:</strong> <%= event.date %></p>
     <p><strong>Approval Status:</strong> <%= event.approval_status %></p>
-    <!-- Add more event details here -->
-    <!-- Add form to change approval status -->
+    <p><strong>Room Type:</strong> <%= event.roomtype %></p>
+    <p><strong>Occupamcy:</strong> <%= event.ocuppancy %></p>
+    <!-- form to change approval status -->
     <form action="/events/<%= event._id %>/approval" method="POST">
         <label for="approvalStatus">Change Approval Status:</label>
         <select name="approvalStatus">
