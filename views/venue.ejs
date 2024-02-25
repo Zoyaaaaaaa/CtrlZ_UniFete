@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Venue Availabilty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <style>
         *, *:before, *:after {
 -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
@@ -13,10 +16,11 @@ body {
  overflow: hidden;
  font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
  font-weight: 100;
+ width: 80vw;
  color: rgba(255, 255, 255, 1);
  margin: 0;
  padding: 0;
- background: #4A4A4A;
+ background: #001D4A;
  -webkit-touch-callout: none;
  -webkit-user-select: none;
  -khtml-user-select: none;
@@ -30,15 +34,16 @@ body {
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   width: 420px;
-  margin: 0 auto;
-  height: 570px;
+  margin: -50px auto;
+  height: 540px;
   overflow: hidden;
+  transform: scale(0.8)
 }
 
 .header {
   height: 50px;
   width: 420px;
-  background: rgba(66, 66, 66, 1);
+  background: #ECA400;
   text-align: center;
   position:relative;
   z-index: 100;
@@ -47,10 +52,13 @@ body {
 .header h1 {
   margin: 0;
   padding: 0;
+  position: relative;
+  top: -27px;
   font-size: 20px;
   line-height: 50px;
   font-weight: 100;
   letter-spacing: 1px;
+  font-family: "Ubunto";
 }
 
 .left, .right {
@@ -65,13 +73,13 @@ body {
 
 .left {
   border-width: 7.5px 10px 7.5px 0;
-  border-color: transparent rgba(160, 159, 160, 1) transparent transparent;
+  border-color: transparent  #006992 transparent transparent;
   left: 20px;
 }
 
 .right {
   border-width: 7.5px 0 7.5px 10px;
-  border-color: transparent transparent transparent rgba(160, 159, 160, 1);
+  border-color: transparent transparent transparent #006992;
   right: 20px;
 }
 
@@ -114,7 +122,7 @@ body {
 }
 
 .week {
- background: #4A4A4A;
+ background-color: #EAF8BF;
 }
 
 .day {
@@ -124,7 +132,7 @@ body {
   text-align: center;
   vertical-align: top;
   cursor: pointer;
-  background: #4A4A4A;
+  background-color: #EAF8BF;
   position: relative;
   z-index: 100;
 }
@@ -141,13 +149,14 @@ body {
   font-size: 9px;
   text-transform: uppercase;
   margin-bottom: 5px;
-  color: rgba(255, 255, 255, .5);
+  color: #006992;
   letter-spacing: .7px;
 }
 
 .day-number {
   font-size: 24px;
   letter-spacing: 1.5px;
+  color: #001D4A;
 }
 
 
@@ -172,7 +181,7 @@ body {
 }
 
 .blue { background: rgba(156, 202, 235, 1); }
-.orange { background: rgba(247, 167, 0, 1); }
+.orange { background: #006992; }
 .green { background: rgba(153, 198, 109, 1); }
 .yellow { background: rgba(249, 233, 0, 1); }
 
@@ -180,7 +189,7 @@ body {
   position: relative;
   width: 420px;
   height: 75px;
-  background: rgba(164, 164, 164, 1);
+  background:#006992;
   margin-top: 5px;
   border-radius: 4px;
 }
@@ -206,7 +215,7 @@ body {
   height: 0px;
   border-style: solid;
   border-width: 0 5px 5px 5px;
-  border-color: transparent transparent rgba(164, 164, 164, 1) transparent;
+  border-color: transparent transparent #006992 transparent;
   transition: all 0.7s ease;
 }
 
@@ -271,7 +280,7 @@ body {
   bottom: 0;
   width: 100%;
   height: 30px;
-  background: rgba(60, 60, 60, 1);
+  background: #ECA400;
   line-height: 30px;
 
 }
@@ -295,7 +304,7 @@ body {
 }
 
 .entry.blue:after { background: rgba(156, 202, 235, 1); }
-.entry.orange:after { background: rgba(247, 167, 0, 1); }
+.entry.orange:after { background: #006992; }
 .entry.green:after { background: rgba(153, 198, 109, 1); }
 .entry.yellow:after { background: rgba(249, 233, 0, 1); }
 
@@ -389,10 +398,238 @@ body {
 @keyframes fadeOutShink  {
   to { opacity: 0; padding: 0px; height: 0px; }
 }
+.navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 1rem;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+      text-align: center; /* Centered text */
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #f6f7fa;
+      margin: 0 1rem;
+      font-size: 1rem;
+      
+      letter-spacing: 0.05rem;
+      transition: color 0.3s ease;
+      
+    }
+
+    .navbar a:hover {
+      color: #406dd5;
+    }
+        /* CSS */
+        .btn-list {
+            align-items: center;
+            appearance: none;
+            background-color: #27476E;
+            border-radius: 4px;
+            border-width: 0;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+            rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #ffff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: "Noto sans", sans-serif;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: left;
+            text-decoration: none;
+            transition: box-shadow 0.15s, transform 0.15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow, transform;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 80vw; /* Adjusted max-width for better readability */
+            margin: 20px auto;
+            position: relative;
+            left: 90px;
+            background-color: #d0ffa7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 90vh;
+        }
+        .container h1{
+            text-align: center;
+            font-family: "Ubunto";
+            color: #001D4A;
+           padding-top: 30px;
+        }
+        #venueAvailibility {
+            margin-top: 20px;
+            display: none;
+            transform: scale(0.8);
+            
+        }
+        .but{
+            margin-right: 85px;
+            margin-top: 3px;
+        }
+        .but h2{
+            color: #001D4A;
+        }
+        .but button{
+            padding: 10px 20px;
+            font-family: "Nunito Sans";
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            background-color: #001D4A;
+            color: #d6d6e7;
+        }
+        .but button:hover{
+            background-color: #006992;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px; /* Adjusted padding for table cells */
+            border-bottom: 1px solid #001D4A;
+            text-align: left;
+            color: #001D4A;
+        }
+
+        th {
+            background-color: #006992;
+        }
+
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+
+        .unavailable {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Add media query for adjusting navbar on smaller screens */
+        @media screen and (max-width: 600px) {
+            .navbar {
+                text-align: center;
+            }
+
+            .navbar a {
+                display: block;
+                margin: 0.5rem 0;
+              
+            }
+        }
+        .FULL{
+            display: flex;
+            flex-direction: row;
+            margin-left: -70px;
+            gap: -20px;
+            height: 370px;
+        }
     </style>
 </head>
 <body>
-    <div id="calendar"></div>
+    <div class="navbar">
+        <a href="/upcomingevents">UpcomingEvent</a>
+        <a href="/venue">Venue Availability</a>
+        <a href="requestanevent">RequestAnEvent</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h1>Venue Availability Check</h1>
+        <div class="FULL">
+    <div id="calendar"><input type="hidden" id="eventDate"></div>
+    <div class="but">
+    <button onclick="checkAvailability()">Check Availability</button>
+
+    <div id="venueAvailability">
+        <h2>Available Rooms</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="roomList">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+<script>
+     document.querySelector("#calendar").addEventListener("click", function (event) {
+    if (event.target.classList.contains("day")) {
+        const selectedDate = moment().set({
+            "year": calendar.current.year(),
+            "month": calendar.current.month(),
+            "date": parseInt(event.target.querySelector(".day-number").textContent)
+        });
+        document.getElementById("eventDate").value = selectedDate.format("YYYY-MM-DD");
+        checkAvailability();
+    }
+});
+
+    function checkAvailability() {
+        const selectedDate = document.getElementById('eventDate').value;
+        const eventDate = new Date(selectedDate);
+        const roomList = document.getElementById('roomList');
+
+        // Simulated room availability data
+        const rooms = [
+            { number: '302', type: 'Room', size: 'Medium', available: true },
+            { number: '306', type: 'Auditorium', size: 'Large', available: false },
+            { number: '404', type: 'Lab', size: 'Small', available: true },
+            { number: '703', type: 'Room', size: 'Medium', available: true },
+            { number: '704', type: 'Auditorium', size: 'Large', available: false },
+        ];
+
+        // Clear previous results
+        roomList.innerHTML = '';
+
+        // Display available rooms based on the selected date
+        rooms.forEach(room => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${room.number}</td>
+                <td>${room.type}</td>
+                <td>${room.size}</td>
+                <td class="${room.available ? 'available' : 'unavailable'}">${room.available ? 'Available' : 'Unavailable'}</td>
+            `;
+            roomList.appendChild(row);
+        });
+
+        // Show room availability section
+        document.getElementById('venueAvailability').style.display = 'block';
+    }
+</script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 <script>
     !function() {
@@ -718,15 +955,15 @@ function createElement(tagName, className, innerText) {
 
 !function() {
 var data = [
-  { eventName: '303', calendar: 'Not Available', color: 'orange' },
-  { eventName: '404', calendar: 'Not Available', color: 'orange' },
-  { eventName: '703', calendar: 'Not Available', color: 'orange' },
-  { eventName: '604', calendar: 'Not Available', color: 'orange' },
+  { eventName: 'TSEC HACKS', calendar: 'Not Available', color: 'orange' },
+  { eventName: 'DIAL M FOR MURDER', calendar: 'Not Available', color: 'orange' },
+  { eventName: 'NEWBIETHON', calendar: 'Not Available', color: 'orange' },
+  { eventName: 'CODEISSANCE', calendar: 'Not Available', color: 'orange' },
 
-  { eventName: '303', calendar: 'Available', color: 'green' },
-  { eventName: '404', calendar: 'Available', color: 'green' },
-  { eventName: '703', calendar: 'Available', color: 'green' },
-  { eventName: '604', calendar: 'Available', color: 'green' }
+  { eventName: 'FREE', calendar: 'Available', color: 'green' },
+  { eventName: 'FREE', calendar: 'Available', color: 'green' },
+  { eventName: 'FREE', calendar: 'Available', color: 'green' },
+  { eventName: 'FREE', calendar: 'Available', color: 'green' }
 ];
 
 

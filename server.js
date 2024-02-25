@@ -14,6 +14,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const MONGO_URL = "mongodb://127.0.0.1:27017/unifete";
 const userRouter=require("./routes/user.js");
+const Feedback=require("./models/feedback.js");
 const { error } = require('console');
 const authRole=require("./middleware.js");
 var http = require('http');
@@ -66,6 +67,10 @@ res.render("index.ejs");
 app.get("/subscription",async(req,res)=>{
   res.render("sub.ejs");
 })
+app.get("/feedback",async(req,res)=>{
+  res.render("feedback.ejs");
+})
+
 //Route for Student dashBoard
 app.get("/dashboard/student", async (req, res) => {
  
@@ -130,10 +135,10 @@ app.post('/send_email', async (req, res) => {
       html: `
             <p>Committee Name: Codecell</p>
            
-            <p>Event Description: ${description}</p>
-            <p>Date: ${date}</p>
-            <p>Room Required: ${roomType}</p>
-            <p>Expected Attendees: ${occupancySize}</p>
+            <p>Event Description: ${req.body.description}</p>
+            <p>Date: ${req.body.date}</p>
+            <p>Room Required: ${req.body.roomType}</p>
+            <p>Expected Attendees: ${req.body.occupancySize}</p>
             <br>
           <p>Please check your dashboard for further details and  provide approval</p>
         `
@@ -147,18 +152,50 @@ app.post('/send_email', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
-app.post('/events/:eventId/approval',authRole('faculty'), async (req, res) => {
+app.get("/student/registration",async(req,res)=>{
+  res.render("registerevent.ejs");
+})
+app.post("/studentemail", function (req, response) {
+  var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: 'urjabahad27@gmail.com',
+          pass: 'vxpbfxincqurlszt'
+      }
+  });
+  
+  var mailOptions = {
+      from: 'urjabahad27@gmail.com', 
+      to: req.body.email, 
+      subject: 'Thank you for Resgistering',
+      html: `
+          <p>Thank you for completing the registration process! Your participation is highly valued, and we are currently processing your request to be added to the event group. Rest assured, you will be part of the group shortly. If you have any further questions or need assistance, feel free to reach out. We look forward to your active involvement in the upcoming event!</p>
+          <br>
+          <p>-UniFete</p>
+      `
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log("Email sent: " + info.response);
+      }
+      response.redirect("/dashboard/student");
+  });
+});
+app.post('/events/:eventId/approval', async (req, res) => {
   const { eventId } = req.params;
   const { approvalStatus } = req.body;
   try {
-    const event = await Event.findById(eventId).populate('committee._id');
+    const event = await Event.findById(eventId);
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
 
     event.approval_status = approvalStatus;
     await event.save();
-    res.status(200).json({ message: 'Approval status updated successfully', event });
+    res.redirect("/dashboard/faculty");
   } catch (error) {
     console.error('Error updating approval status:', error);
     res.status(500).json({ error: 'Internal server error' });
