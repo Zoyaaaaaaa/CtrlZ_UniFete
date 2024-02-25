@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+       
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+           
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-image: url(https://images.unsplash.com/photo-1546453667-8a8d2d07bc20?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+        }
+
+        .chatContainer {
+            position: relative;
+            max-width: 80vw;
+            height: 90vh;
+            background-color: white;
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.65);
+            
+            margin: auto;
+            top: 50%;
+            
+            transform: translateY(-50%);
+            display: flex;
+            padding-bottom: 20px;
+            flex-direction: column;
+        }
+
+        .chatHead {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            background-color: #001D4A;
+            align-items: center;
+        }
+
+        .chatHead p {
+            margin: 10px auto;
+            text-align: center;
+            font-family: "Ubunto";
+            color: white;
+            font-weight: 500;
+        }
+
+
+        .usersCount {
+            color: white;
+            align-items: center;
+            position: absolute;
+            right: 10px;
+        }
+
+        .usersCount span {
+            font-family: 'Nunito Sans';
+            letter-spacing: 2px;
+            margin-left: 4px;
+        }
+
+        .usersCount i {
+            font-size: 14px;
+        }
+
+
+        #messageForm {
+            display: flex;
+            max-width: 78vw;
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+           
+            margin: 5px 10px;
+            width: 100%;
+        }
+
+        #messageForm input {
+            width: 100%;
+            outline: 1px solid #001D4A;
+            border: none;
+            padding: 8px 60px 8px 10px;
+            font-weight: 500;
+            font-family: 'Nunito sans';
+            font-size: 14px;
+            color: rgb(16, 16, 16);
+            border-radius: 4px;
+            height: 30px;
+        }
+
+        #sendBtn {
+            outline: none;
+            border: none;
+            position: absolute;
+            border-radius: 4px;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            background-color: #001D4A;
+            color: white;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: .3s;
+            font-family: 'Nunito sans';
+            font-weight: 500;
+           
+        }
+
+        #sendBtn:hover {
+            background-color: #006992;
+        }
+
+
+        .chattings {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 10px;
+            overflow-y: auto;
+            margin-bottom: 30px;
+        }
+
+
+        .chattings::-webkit-scrollbar {
+            width: 6px;
+        }
+
+
+        .chattings::-webkit-scrollbar-thumb {
+            width: 6px;
+            border-radius: 4px;
+            background-color: #001D4A;
+        }
+
+
+        .message {
+            font-family: 'Nunito sans';
+            color: white;
+            background-color: #ECA400;
+            max-width: 60vw;
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            margin-bottom: 12px;
+            word-wrap: break-word;
+            padding: 8px 10px;
+            font-size: 14px;
+
+        }
+
+        .message span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.637);
+        }
+
+        .message p {
+            margin: 0;
+            margin-top: 2px;
+            font-size: 1rem;
+        }
+
+        .message i {
+            position: absolute;
+            bottom: -5px;
+            color: rgb(195, 1, 1);
+            font-size: 13px;
+            display: none;
+        }
+
+        .center {
+            align-self: center;
+            border-radius: 8px;
+            background-color: #27476E;
+            color: #ffff;
+            text-align: center;
+        }
+
+        .message.center p {
+            font-size: 12px;
+        }
+
+        .message.liked i {
+            display: flex;
+        }
+
+        .right {
+            border-radius: 16px;
+            border-bottom-right-radius: 0;
+            align-self: flex-end;
+        }
+
+        .left {
+            border-radius: 16px;
+            border-bottom-left-radius: 0;
+            align-self: flex-start;
+        }
+
+        .noAccess {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Poppins';
+            color: rgb(255, 255, 255);
+            text-align: center;
+            text-align: center;
+            width: 100%;
+            font-size: 2rem;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+       
+        .serverFull {
+            position: absolute;
+            bottom: 0;
+            color: #001D4A;
+            display: none;
+            font-family: 'Ubunto';
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+        }
+
+        .serverFull.active {
+            display: flex;
+            justify-content: center;
+        }
+      
+    </style>
+    <script defer src="https://kit.fontawesome.com/42eae9eadc.js" crossorigin="anonymous"></script>
+    <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script defer src="./client.js"></script>
+</head>
+
+<body>
+    
+    <div class="container">
+        
+
+        <div class="chatContainer" id="chatContainer">
+            <div class="chatHead">
+                <p>Chat Room</p>
+                <div class="usersCount">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="onUsers">0</span>
+                </div>
+            </div>
+            <div class="chattings" id="chatting">
+                
+            </div>
+            <form action="#" id="messageForm">
+                <input type="text" id="messageInput" placeholder="Enter your message">
+                <button id="sendBtn">Send</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+
+</html>
