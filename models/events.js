@@ -24,13 +24,13 @@ const eventSchema = new mongoose.Schema({
     enum: ['Pending', 'Approved', 'Rejected'],
     default: 'Pending'
   },
-  ocuppancy:{
+  occupancy:{
     type:Number,
    required:true,
   },
   roomtype:{
     type:String,
-    enum: ['Confrence', 'Auditorium', 'Labs','Other'],
+    enum: ['Conference', 'Auditorium', 'Labs','Other'],
     default: 'Other'
   }
 
