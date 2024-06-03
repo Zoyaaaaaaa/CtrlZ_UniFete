@@ -519,7 +519,7 @@ for(let i=0; i<toggles.length; i++){
         
        
         <li class="log_out">
-          <a href="index.html">
+          <a href="/logout">
             <i class='bx bx-log-out'></i>
             <span class="links_name">Log out</span>
           </a>
@@ -537,8 +537,9 @@ for(let i=0; i<toggles.length; i++){
         <i class='bx bx-search' ></i>
       </div>
       <div class="profile-details">
+        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png">
+        <span class="admin_name"><%= curruser.username %></span>
        
-        <span class="admin_name">Pooja Makhijani</span>
         <i class='bx bx-chevron-down' ></i>
       </div>
     </nav>
@@ -553,14 +554,25 @@ for(let i=0; i<toggles.length; i++){
           </div>
          
         </div>
-        <div class="box" style="background-color:#27476E;">
+        <!-- <div class="box" style="background-color:#27476E;">
           <div class="right-side">
             <div class="box-topic" style="color:white;">Upcoming Events</div>
             <div class="number" style="color: white;">11</div>
            
           </div>
 
-        </div>
+        </div> -->
+        
+        <div class="box" style="background-color:#27476E;">
+          <div class="right-side">
+              <div class="box-topic" style="color:white;">Upcoming Events</div>
+              <% if (events && events.length > 0) { %>
+                  <div class="number" style="color:white;"><%= events.length %></div>
+              <% } else { %>
+                  <div class="number" style="color:white;">Loading...</div>
+              <% } %>
+          </div>
+      </div>
         <!--<div class="box">
           <div class="right-side">
             <div class="box-topic">Total Profit</div>

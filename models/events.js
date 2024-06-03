@@ -6,6 +6,7 @@ const eventSchema = new mongoose.Schema({
     ref: 'Committee',
     required: true
   },
+  
   name: {
     type: String,
     required: true
@@ -32,7 +33,12 @@ const eventSchema = new mongoose.Schema({
     type:String,
     enum: ['Conference', 'Auditorium', 'Labs','Other'],
     default: 'Other'
-  }
+  },
+  image: {
+    type: String, // Store the file path here
+    required: true
+  },
+  feedback: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Feedback' }] 
 
 });
 

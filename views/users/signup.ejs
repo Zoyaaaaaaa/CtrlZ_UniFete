@@ -177,46 +177,74 @@
             <div class="col-md-6">
                 <div class="images"></div>
                 <div class="fullform">
-                <h2 class="text-center mb-4">SignUp for your account</h2>
-                <form action="/signup" method="POST" novalidate class="needs-validation">
-                    <div class="mb-3">
-                        <label for="username class=" form-label">Username</label>
-                        <input name="username" placeholder="Add a username" type="text" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input name="email" placeholder="Add an email" type="email" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input name="password" placeholder="Add a password" type="password" class="form-control"
-                            required />
-                    </div>
-
-                    <!-- Dropdown for selecting role -->
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select name="role" class="form-select" required>
-                            <option value="" selected disabled>Select a role</option>
-                            <option value="student">Student</option>
-                            <option value="committee">Committee</option>
-                            <option value="faculty">Faculty</option>
-                        </select>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success">SignUp</button>
-                    </div>
-                    
-                   
-                </form>
+                    <h2 class="text-center mb-4">SignUp for your account</h2>
+                    <form action="/signup" method="POST" novalidate class="needs-validation">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input name="username" placeholder="Add a username" type="text" class="form-control" required />
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input name="email" placeholder="Add an email" type="email" class="form-control" required />
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input name="password" placeholder="Add a password" type="password" class="form-control" required />
+                        </div>
+    
+                        <!-- Dropdown for selecting role -->
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" id="roleSelect" class="form-select" required>
+                                <option value="" selected disabled>Select a role</option>
+                                <option value="student">Student</option>
+                                <option value="committee">Committee</option>
+                                <option value="faculty">Faculty</option>
+                            </select>
+                        </div>
+    
+                        <!-- Committee ID field -->
+                        <!-- <div id="committeeIdField" class="mb-3" style="display: none;">
+                            <label for="committeeId" class="form-label">Committee ID</label>
+                            <input name="committeeId" placeholder="Add committee ID" type="text" class="form-control" />
+                        </div> -->
+                        <div id="committeeIdField" class="mb-3" style="display: none;">
+                            <label for="committee" class="form-label">Select Committee</label>
+                            <select id="committee" name="committee" required>
+                              <% committees.forEach(committee => { %>
+                                <option value="<%= committee._id %>"><%= committee.name %></option>
+                              <% }) %>
+                            </select>
+                          </div>
+                        
+    
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">SignUp</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            
-        </div>
         </div>
     </div>
+    
+    <script>
+        const roleSelect = document.getElementById('roleSelect');
+        const committeeIdField = document.getElementById('committeeIdField');
+    
+        // Event listener for role dropdown change
+        roleSelect.addEventListener('change', () => {
+            if (roleSelect.value === 'committee') {
+  
+                committeeIdField.style.display = 'block';
+            } else {
+              
+                committeeIdField.style.display = 'none';
+            }
+        });
+    </script>
+    
 
 </body>
 

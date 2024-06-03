@@ -3,132 +3,148 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><!--<%= event.name %> Details--></title>
+    <title><%= event.name %></title>
  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Navbar styling */
         .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #ECA400;
-      padding: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      transition: background-color 0.3s ease;
-      text-align: right;
-      
-    }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ECA400;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            text-align: right;
+        }
 
-    .navbar a {
-      text-decoration: underline;
-      color: white;
-      margin: 0 1rem;
-      font-size: 1.5rem;
-      letter-spacing: 0.05rem;
-      transition: color 0.3s ease;
-    }
+        .navbar a {
+            text-decoration: underline;
+            color: white;
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            letter-spacing: 0.05rem;
+            transition: color 0.3s ease;
+        }
 
-    .navbar a:hover {
-      color: #406dd5;
-    }
-     
+        .navbar a:hover {
+            color: #406dd5;
+        }
+
+        /* Body and container styling */
         body {
             font-family: 'Arial', sans-serif;
-            background-color:#001D4A;
-            color: black; /* Lighter Grey */
+            background-color:#0b0a0a;
+            color: white;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            overflow: hidden; /* Hide overflow to prevent scrolling during animation */
+        }
+
+        .container {
+    background-color: #0e0e0e; /* Dark background color */
+    padding: 40px;
+    border-radius: 12px; /* Increased border radius for a smoother look */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Initial box-shadow */
+    width: 500px; /* Adjust width as needed */
+    height: 800px; /* Adjust height as needed */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateY(-100vh); /* Initial position off the screen */
+    animation: slideFromTop 0.5s forwards, glow 2s infinite alternate; /* Animation effect */
+}
+
+@keyframes slideFromTop {
+    from {
+        transform: translateY(-100vh); /* Start off the screen */
+    }
+    to {
+        transform: translateY(0); /* Move to desired position */
+    }
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Initial box-shadow */
+    }
+    to {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 255, 255, 0.4); /* Glowing effect */
+    }
+}
+
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
             text-align: center;
         }
-    
-        .container {
-            background: linear-gradient(135deg, white,white); /* Gradient from Light Blue to Darker Blue */
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            width: 500px; /* Adjust width as needed */
-            height: 400px; /* Adjust height as needed */
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-    
-        h1 {
-            color: black; /* Lighter Grey */
-            margin-bottom: 20px;
-        }
-    
+
         p {
-            margin-bottom: 10px;
+            margin-bottom: 1px;
             padding-bottom: 15px;
-            color: black; /* Lighter Grey */
+            color: white;
         }
-    
+
         strong {
             font-weight: bold;
-            color: black; /* Lighter Grey */
+            color: white;
         }
-    
+
         form {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             margin-top: 20px;
         }
-    
+
         label {
             margin-bottom: 10px;
             font-weight: bold;
-            color: black; /* Lighter Grey */
+            color: white;
         }
-    
+
         select {
             padding: 10px;
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 10px;
         }
-    
+
         button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #e67e22; /* Orange */
-            color: #ecf0f1; /* Lighter Grey */
+            background-color: #e67e22;
+            color: #ecf0f1;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-    
+
         button:hover {
-            background-color: #d35400; /* Darker Orange */
+            background-color: #d35400;
         }
     </style>
-    
-
-    
-    
 </head>
 
 <body>
     <div class="navbar">
-        <a href="#" style="padding-right: 40px; font-size: 15px;">Back to Dasboard</a>
-      </div>
+        <a href="#" style="padding-right: 40px; font-size: 15px;">Back to Dashboard</a>
+    </div>
     <div class="container">
-       
-        <h1><%= event.name %> DETAILS</h1>
-        <p><strong>Description:</strong><%= event.description %></p>
+        <h1><%= event.name %> Event Details</h1>
+        <img src="<%= event.image %>" alt="Event Image">
+        <p><strong>Description:</strong> <%= event.description %></p>
         <p><strong>Date:</strong> <%= event.date %></p>
         <p><strong>Approval Status:</strong> <%= event.approval_status %></p>
-        <!-- Add more event details here -->
-        <!-- Add form to change approval status -->
         <form action="/events/<%= event._id %>/approval" method="POST">
-        <form>
             <div class="form-group">
                 <label for="approvalStatus">Change Approval Status:</label>
                 <select name="approvalStatus">
@@ -139,9 +155,8 @@
                 <button type="submit">Submit</button>
             </div>
         </form>
-
-      
     </div>
+
 </body>
 
 </html>

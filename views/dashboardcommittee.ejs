@@ -31,7 +31,10 @@
   height: 80px;
   display: flex;
   align-items: center;
+  color: whitesmoke;
+  font-size: larger;
 }
+
 .sidebar .logo-details i{
   font-size: 28px;
   font-weight: 500;
@@ -482,11 +485,18 @@ nav .profile-details i{
 <div class="sidebar">
   <div class="logo-details">
     <i class='bx bxl-c-plus-plus'></i>
-    <span class="logo_name">Codecell</span>
+    <span class="/committee/dashboard">
+      <% if (curruser.committeeName) { %>
+        <%= curruser.committeeName.name %>
+      <% } else { %>
+        No Committee Assigned
+      <% } %>
+    </span>
+    
   </div>
   <ul class="nav-links">
     <li>
-      <a href="/committe/dashboard" class="active">
+      <a href="/events" class="active">
         <i class='bx bx-grid-alt' ></i>
         <span class="links_name">Approval Status</span>
       </a>
@@ -505,7 +515,7 @@ nav .profile-details i{
     </li>
     
     <li class="log_out">
-      <a href="/lander">
+      <a href="/logout">
         <i class='bx bx-log-out'></i>
         <span class="links_name">Log out</span>
       </a>
@@ -523,8 +533,8 @@ nav .profile-details i{
       <i class='bx bx-search' ></i>
     </div> -->
     <div class="profile-details">
-    
-      <span class="admin_name">Niel Sharma</span>
+      <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png">
+        <span class="admin_name"><%= curruser.username %></span>
       <i class='bx bx-chevron-down' ></i>
     </div>
   </nav>
@@ -543,7 +553,7 @@ nav .profile-details i{
           </span>
           <!-- You can replace the text above with appropriate icons if needed -->
         </p>
-        <p><strong>Occupancy:</strong> <%= event.ocuppancy %></p>
+        <p><strong>Occupancy:</strong> <%= event.occupancy %></p>
         <p><strong>Room Type:</strong> <%= event.roomtype %></p>
         <!-- Add other event details as needed -->
       </div>
