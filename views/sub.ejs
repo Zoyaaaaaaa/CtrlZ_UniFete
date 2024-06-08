@@ -21,11 +21,15 @@
             flex-direction: column;
             justify-content: space-between;
             background: linear-gradient(90deg, #EAF8BF 0%, #ECA400 100%);
+            color: #001D4A; /* Changed text color */
         }
 
         .card {
             border: none;
             padding: 10px 50px;
+            background-color: #fff; /* Added background color */
+            border-radius: 15px; /* Added border-radius */
+           margin-top: 50%;
         }
 
         .card::after {
@@ -41,7 +45,7 @@
             -webkit-transform: scale(1.02, 1.02);
             backface-visibility: hidden;
             will-change: transform;
-            box-shadow: 0 1rem 3rem rgba(0, 0, 0, .75) !important;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, .25) !important; /* Adjusted box-shadow */
         }
 
         .card:hover::after {
@@ -51,14 +55,30 @@
         .card:hover .btn-outline-primary {
             color: white;
             background: #006992;
+            border-color: #006992; /* Adjusted border color */
         }
 
         .home-icon {
             text-align: center;
             padding: 20px;
             font-size: 24px;
-            color: white;
+            color: #fff; /* Changed icon color */
             cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Added background color */
+            border-radius: 50%; /* Added border-radius */
+            width: 40px; /* Added width */
+            height: 40px; /* Added height */
+            display: flex; /* Added display */
+            align-items: center; /* Added align-items */
+            justify-content: center; /* Added justify-content */
+        }
+
+        .home-icon a {
+            color: #fff; /* Changed icon color */
+            text-decoration: none; /* Removed underline */
         }
     </style>
 
@@ -126,15 +146,15 @@
     </div>
 
     <div class="home-icon">
-        <a href="lander.ejs">
+        <a href="/lander">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house"
                 viewBox="0 0 16 16">
                 <path
-                    d="M0 5.5l8-6.973 8 6.973v8.527a.5.5 0 0 1-1 0V8h-2v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V9H5v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5.5zm1.854-.353L8 1.793l6.146 3.354a.5.5 0 0 1 .18.684l-1.05 2.631a2 2 0 0 1-1.461 1.296l-.365.037a1 1 0 0 0-.773.639l-.895 2.238a.5.5 0 0 1-.952 0l-.895-2.237a1 1 0 0 0-.773-.64l-.365-.036a2 2 0 0 1-1.46-1.297l-1.05-2.63a.5.5 0 0 1 .18-.684z" />
+                    d="M0 5.5l8-6.973 8 6.973v8.527a.5.5 0 0 1-1 0V8h-2v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V9H5v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5.5zm1.854-.353L8 1.793l6.146 3.354a.5.5 0 0 1 .18.684l-1.05 2.631a2 2 0
+                    0 1 0 1 1.461 1.296l.365.037a1 1 0 0 0 .773.639l.895 2.238a.5.5 0 0 1 .952 0l.895-2.237a1 1 0 0 0 .773-.64l.365-.036a2 2 0 0 1 1.46-1.297l1.05-2.63a.5.5 0 0 1 .18-.684z" />
             </svg>
         </a>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"

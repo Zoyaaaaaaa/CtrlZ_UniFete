@@ -28,30 +28,33 @@
             line-height: 1.4;
             
         }
-
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #001D4A;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            text-align: right;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #001D4A, #00C6FF);
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
-        .navbar a {
-            text-decoration: none;
-            color: white;
-            margin: 0 1rem;
-            font-size: 1.8rem;
-            transition: color 0.3s ease;
-        }
+.navbar a {
+    text-decoration: none;
+    color: white;
+    margin: 0 1.5rem;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
 
-        .navbar a:hover {
-            color: #406dd5;
-        }
+.navbar a:hover {
+    color: #ffcc00;
+    transform: scale(1.1);
+}
 
         .card-filter {
             width: 80%;

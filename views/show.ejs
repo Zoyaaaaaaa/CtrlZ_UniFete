@@ -7,60 +7,61 @@
  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Navbar styling */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #ECA400;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: background-color 0.3s ease;
-            text-align: right;
-        }
+/* Navbar styling */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ECA400;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    text-align: right;
+}
 
-        .navbar a {
-            text-decoration: underline;
-            color: white;
-            margin: 0 1rem;
-            font-size: 1.5rem;
-            letter-spacing: 0.05rem;
-            transition: color 0.3s ease;
-        }
+.navbar a {
+    text-decoration: none; /* Removed underline */
+    color: white;
+    justify-content: center;
+    margin-right: 3rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.05rem;
+    transition: color 0.3s ease;
+}
 
-        .navbar a:hover {
-            color: #406dd5;
-        }
+.navbar a:hover {
+    color: #406dd5;
+}
 
-        /* Body and container styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color:#0b0a0a;
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden; /* Hide overflow to prevent scrolling during animation */
-        }
+/* Body and container styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #001D4A;
+    color:#001D4A;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden; /* Hide overflow to prevent scrolling during animation */
+}
 
-        .container {
-    background-color: #0e0e0e; /* Dark background color */
+.container {
+    background-color: white; /* Dark background color */
     padding: 40px;
     border-radius: 12px; /* Increased border radius for a smoother look */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Initial box-shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Initial box-shadow */
     width: 500px; /* Adjust width as needed */
-    height: 800px; /* Adjust height as needed */
+    height: 400px; /* Adjust height as needed */
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transform: translateY(-100vh); /* Initial position off the screen */
-    animation: slideFromTop 0.5s forwards, glow 2s infinite alternate; /* Animation effect */
+    animation: slideFromTop 0.5s forwards; /* Removed the glow animation */
 }
 
 @keyframes slideFromTop {
@@ -72,75 +73,67 @@
     }
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Initial box-shadow */
-    }
-    to {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 255, 255, 0.4); /* Glowing effect */
-    }
+h1 {
+    color: #001D4A;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 1px;
+    padding-bottom: 15px;
+    color:#001D4A;
+}
+
+strong {
+    font-weight: bold;
+    color: #001D4A;
 }
 
 
-        h1 {
-            color: white;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
 
-        p {
-            margin-bottom: 1px;
-            padding-bottom: 15px;
-            color: white;
-        }
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: white;
+}
 
-        strong {
-            font-weight: bold;
-            color: white;
-        }
+select {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: 20px;
-        }
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #e67e22;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-        label {
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: white;
-        }
+button:hover {
+    background-color: #d35400;
+}
 
-        select {
-            padding: 10px;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #e67e22;
-            color: #ecf0f1;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
 
-        button:hover {
-            background-color: #d35400;
-        }
     </style>
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#" style="padding-right: 40px; font-size: 15px;">Back to Dashboard</a>
-    </div>
+   
     <div class="container">
         <h1><%= event.name %> Event Details</h1>
-        <img src="<%= event.image %>" alt="Event Image">
+        <!-- <img src="<%= event.image %>" alt="Event Image"> -->
         <p><strong>Description:</strong> <%= event.description %></p>
         <p><strong>Date:</strong> <%= event.date %></p>
         <p><strong>Approval Status:</strong> <%= event.approval_status %></p>
@@ -156,7 +149,18 @@
             </div>
         </form>
     </div>
+    <div class="navbar">
+        <a href="/dashboard/faculty">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house"
+                viewBox="0 0 16 16">
+                <path
+                    d="M0 5.5l8-6.973 8 6.973v8.527a.5.5 0 0 1-1 0V8h-2v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V9H5v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5.5zm1.854-.353L8 1.793l6.146 3.354a.5.5 0 0 1 .18.684l-1.05 2.631a2 2 0
+                    0 1 0 1 1.461 1.296l.365.037a1 1 0 0 0 .773.639l.895 2.238a.5.5 0 0 1 .952 0l.895-2.237a1 1 0 0 0 .773-.64l.365-.036a2 2 0 0 1 1.46-1.297l1.05-2.63a.5.5 0 0 1 .18-.684z" />
+            </svg>
+        </a>
 
+    </div>
+    
 </body>
 
 </html>

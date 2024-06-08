@@ -1,5 +1,4 @@
-
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,39 +7,51 @@
     <title>Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Ubuntu:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
-        html {
+        html, body {
             margin: 0;
             padding: 0;
+            font-family: 'Nunito Sans', sans-serif;
             background-color: #001D4A;
-        }
-
-        body {
-            width: 70vw;
-            background-color: #f8f9fa;
-            font-family: "Ubunto";
-            position: relative;
-            top: -15px;
-            left: 170px;
+            color: #fff;
         }
 
         .container {
-            margin-top: 5%;
-            width: 70vw;
-           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0 3rem;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-container .form-title {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #001D4A;
+            text-align: center;
         }
 
         .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-family: "Nunito Sans", sans-serif;
             font-weight: 700;
-            font-style: normal;
             font-size: 18px;
             color: #001D4A;
+            margin-bottom: 8px;
         }
 
         .form-control {
@@ -49,6 +60,13 @@
             margin-bottom: 20px;
             border: 1px solid #ced4da;
             border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #ECA400;
+            outline: none;
         }
 
         .btn-success {
@@ -58,112 +76,62 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         .btn-success:hover {
             background-color: #006992;
         }
 
-
         .images {
-            display: block;
-            width: 40vw;
-            background: linear-gradient(rgba(236, 164, 0, 0.3), rgba(236, 164, 0, 0.3)), url("https://uploads-ssl.webflow.com/62266fcc3d860c71f00bca09/6425b7e03ba13e73d0359c4c_Students-at-college-concert.jpg");
-            background-repeat: no-repeat;
+            background: url("https://uploads-ssl.webflow.com/62266fcc3d860c71f00bca09/6425b7e03ba13e73d0359c4c_Students-at-college-concert.jpg");
             background-size: cover;
-
-        }
-
-        .col-md-6 {
-            margin: auto;
-            display: flex;
-            flex-direction: row;
-        }
-        .col-md-6 .fullform{
-            padding: 10px;
-        }
-        .col-md-6 form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 30px;
-            width: 30vw;
-            margin-top: 50px;
-        }
-
-        .text-center {
-            text-align: center;
-            font-family: "Ubunto";
-        }
-        .text-center button{
-            position: relative;
-            left: 150px;
-            font-size: 18px;
-        }
-        .container .mt-5 .col-md-6 h2 {
-            text-align: left;
-            font-family: "Ubunto";
-        }
-
-        .mb-3 {
-            margin-bottom: 15px;
-        }
-        
-            
-        
-        .mb-3 input {
-            width: 50vw;
+            background-position: center;
             width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            border: none;
-            border-bottom: 2px solid #ECA400;
-            border-radius: 4px;
-            font-family: "Nunito Sans", sans-serif;
-            font-style: normal;
-            font-size: 18px;
-            position: relative;
-            top: -45px;
-            left: 120px;
+            height: 100vh;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+
+            .login-container {
+                margin-right: 20px;
+            }
+
+            .images {
+                display: block;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="fullform">
-                    <h2 class="text-center mb-4">Login to your Account</h2>
-                    <form action="/login" method="POST" class="needs-validation" novalidate>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input name="username" placeholder="Enter your username" type="text" class="form-control"
-                                required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input name="password" placeholder="Enter your password" type="password"
-                                class="form-control" required />
-                        </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success">Login</button>
-                        </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </form>
+    <div class="container">
+        <div class="login-container">
+            <h2 class="form-title">Login to your Account</h2>
+            <form action="/login" method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input name="username" placeholder="Enter your username" type="text" class="form-control"
+                        required>
                 </div>
 
-                <div class="images">
-                   
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" placeholder="Enter your password" type="password" class="form-control"
+                        required>
                 </div>
-            </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Login</button>
+                </div>
+            </form>
         </div>
+        <div class="images"></div>
     </div>
 </body>
 
