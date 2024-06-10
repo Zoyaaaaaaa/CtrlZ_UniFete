@@ -55,7 +55,7 @@ body {
     border-radius: 12px; /* Increased border radius for a smoother look */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Initial box-shadow */
     width: 500px; /* Adjust width as needed */
-    height: 400px; /* Adjust height as needed */
+    height: 650px; /* Adjust height as needed */
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -132,8 +132,14 @@ button:hover {
 <body>
    
     <div class="container">
-        <h1><%= event.name %> Event Details</h1>
-        <!-- <img src="<%= event.image %>" alt="Event Image"> -->
+        <h1>
+            <%= event.name %> - <% if (event.committee_id && event.committee_id.name) { %>
+                <%= event.committee_id.name %>
+            <% } else { %>
+                Student council
+            <% } %>
+        </h1>
+        <img src="<%=event.image.url%>">
         <p><strong>Description:</strong> <%= event.description %></p>
         <p><strong>Date:</strong> <%= event.date %></p>
         <p><strong>Approval Status:</strong> <%= event.approval_status %></p>

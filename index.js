@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ExpressError=require("./utils/ExpressError.js");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const MongoStore=require("connect-mongo");
 const flash = require("connect-flash");
 const User=require("./models/user.js");
 const Committee=require("./models/commitees.js");
@@ -22,8 +23,9 @@ var http = require('http');
 var server = http.Server(app);
 var nodemailer = require('nodemailer');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads' })
-
+const { storage } = require('./cloudConfig.js');
+const upload = multer({storage})
+const dbUrl=process.env.ATLASDB_URL; 
 //MONGODB SET UP
 main()
   .then(() => {
@@ -35,6 +37,7 @@ main()
 
 async function main() {
   await mongoose.connect(MONGO_URL);
+  // await mongoose.connect(dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -43,7 +46,30 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(session({ secret: 'secret_key', resave: false, saveUninitialized: false }));
+const store=MongoStore.create({
+  mongoUrl:dbUrl,
+  crypto:{
+      secret:process.env.SECRET,
+  },
+  touchAfter:24*3600,
+});
+store.on("error",()=>{
+  console.log("ERROR IN MONGOSTORE!",error);
+})
+const sessionOptions={
+store,
+secret:process.env.SECRET,
+resave:false,
+saveUninitialized:true,
+cookie:{
+  expires:Date.now()+7*24*60*60*1000,
+  maxAge:7*24*60*60*1000,
+  httpOnly:true,
+
+}
+};
+app.use(session(sessionOptions));
+// app.use(session({ secret: 'secret_key', resave: false, saveUninitialized: false }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -217,10 +243,11 @@ app.get("/committee/eventlist",authRole('committee'),async(req,res)=>{
   res.render("requestevent.ejs");
 })
 
-app.post('/send_email', authRole('committee'), upload.single('image'), async (req, res) => {
+app.post('/send_email', authRole('committee'), upload.single("event[image]"), async (req, res) => {
   try {
     const userCommitteeId = req.user.committeeName;
-
+    const url = req.file.path;
+    const filename = req.file.filename; 
     const event = new Event({
       committee_id: userCommitteeId,
       name: req.body.name,
@@ -228,49 +255,55 @@ app.post('/send_email', authRole('committee'), upload.single('image'), async (re
       date: req.body.date,
       occupancy: req.body.occupancySize,
       roomtype: req.body.roomType,
-      image: req.file ? req.file.path : '',
+      image : { url, filename }
     });
-
+    // console.log(req.file);
     await event.save();
-    const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'zoyah768@gmail.com',
-              pass: 'ksha odyf dfyw eptm',
-            }
-          });
-      
-          const mailOptions = {
-            from: 'zoyah768@gmail.com',
-            to:'zoyah768@gmail.com',
-            subject: 'New Event Request',
-            text: `New event request: ${req.body.name}`,
-            html: `
-            <p>Dear Admin,</p>
-            <br>
-            <p>We have submitted a new event request. Please find the details below:</p>
-            <br>
-            <p><strong>Committee Name:</strong> ${req.body.committee_id.name}</p>
-            <p><strong>Event Name:</strong> ${req.body.name}</p>
-            <p><strong>Event Description:</strong> ${req.body.description}</p>
-            <p><strong>Date:</strong> ${req.body.date}</p>
-            <p><strong>Room Type Required:</strong> ${req.body.roomType}</p>
-            <p><strong>Expected Number of Attendees:</strong> ${req.body.occupancySize}</p>
-            <br>
-            <p>We kindly request you to review the event details and provide your approval through the committee dashboard.</p>
-            <br>
-            <p>Thank you!</p>
-            
-              `
-          };
-      
-          await transporter.sendMail(mailOptions);
     res.redirect("/dashboard/committee");
-  } catch (error) {
-    console.error('Error processing event request:', error);
-    req.flash("error", "Error processing event request. Please try again.");
-    res.redirect("/dashboard/committee");
+    // res.send(res.file);
+  }catch(error) {
+    console.error('Error saving event:', error);
+    res.status(500).send('Internal Server Error');
   }
+  //   const transporter = nodemailer.createTransport({
+  //           service: 'gmail',
+  //           auth: {
+  //             user: 'zoyah768@gmail.com',
+  //             pass: 'ksha odyf dfyw eptm',
+  //           }
+  //         });
+      
+  //         const mailOptions = {
+  //           from: 'zoyah768@gmail.com',
+  //           to:'zoyah768@gmail.com',
+  //           subject: 'New Event Request',
+  //           text: `New event request: ${req.body.name}`,
+  //           html: `
+  //           <p>Dear Admin,</p>
+  //           <br>
+  //           <p>We have submitted a new event request. Please find the details below:</p>
+  //           <br>
+  //           <p><strong>Committee Name:</strong> ${req.body.committee_id.name}</p>
+  //           <p><strong>Event Name:</strong> ${req.body.name}</p>
+  //           <p><strong>Event Description:</strong> ${req.body.description}</p>
+  //           <p><strong>Date:</strong> ${req.body.date}</p>
+  //           <p><strong>Room Type Required:</strong> ${req.body.roomType}</p>
+  //           <p><strong>Expected Number of Attendees:</strong> ${req.body.occupancySize}</p>
+  //           <br>
+  //           <p>We kindly request you to review the event details and provide your approval through the committee dashboard.</p>
+  //           <br>
+  //           <p>Thank you!</p>
+            
+  //             `
+  //         };
+      
+  //         await transporter.sendMail(mailOptions);
+  //   res.redirect("/dashboard/committee");
+  // } catch (error) {
+  //   console.error('Error processing event request:', error);
+  //   req.flash("error", "Error processing event request. Please try again.");
+  //   res.redirect("/dashboard/committee");
+  // }
     
 });
 
