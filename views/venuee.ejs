@@ -1,0 +1,389 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venue Availability</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+    .calendar-container {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+    .day {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .available {
+      background-color: lightgreen;
+    }
+    .scheduled {
+      background-color: lightcoral;
+    }
+    .pending {
+      background-color: lightyellow;
+    }
+    .today {
+      border: 2px solid blue;
+    }
+    .modal-header, .modal-body {
+      background-color: #f7f7f7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center my-4">Venue Availability</h1>
+    <div id="venue-list" class="mb-4">
+      <h2>Available Dates</h2>
+      <ul>
+        <% events.forEach(event => { %>
+          <li>
+            <strong>Date:</strong> <%= new Date(event.date).toDateString() %><br>
+            <strong>Availability:</strong> <%= event.approval_status === 'Approved' ? 'Scheduled' : 'Pending Approval' %><br>
+            <strong>Name:</strong> <%= event.name %><br>
+            <strong>Room type:</strong> <%= event.roomtype %>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+    <div class="">Green indicates the event is scheduled but not yet approved, Red indicates the event is scheduled and the day is not available, Yellow indicates pending approval.</div>
+  
+    <div class="calendar-container">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <button id="prevMonth" class="btn btn-primary"><i class="fas fa-chevron-left"></i></button>
+        <h2 id="monthYear"></h2>
+        <button id="nextMonth" class="btn btn-primary"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div id="calendar" class="calendar"></div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="eventDetails"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const events = <%- JSON.stringify(events) %>;
+      const availabilityDictionary = {};
+      events.forEach(event => {
+        const date = new Date(event.date).toDateString();
+        let availability;
+        if (event.approval_status === 'Approved') {
+          availability = 'scheduled';
+        } else {
+          availability = 'pending';
+        }
+        const details = `Name: ${event.name}, Room: ${event.roomtype}`;
+        availabilityDictionary[date] = { availability, details };
+      });
+
+      const calendar = document.getElementById('calendar');
+      const monthYear = document.getElementById('monthYear');
+      const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+      const eventDetails = document.getElementById('eventDetails');
+
+      let today = new Date();
+      let currentMonth = today.getMonth();
+      let currentYear = today.getFullYear();
+
+      function updateCalendar(month, year) {
+        calendar.innerHTML = '';
+        monthYear.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+
+        const firstDay = new Date(year, month).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+          calendar.appendChild(document.createElement('div'));
+        }
+
+        for (let i = 1; i <= daysInMonth; i++) {
+          const dayCell = document.createElement('div');
+          dayCell.classList.add('day');
+          dayCell.textContent = i;
+
+          const date = new Date(year, month, i).toDateString();
+          const eventInfo = availabilityDictionary[date];
+          if (eventInfo) {
+            dayCell.classList.add(eventInfo.availability === 'scheduled' ? 'scheduled' : 'pending');
+            dayCell.addEventListener('click', () => {
+              eventDetails.textContent = eventInfo.details;
+              eventModal.show();
+            });
+          } else {
+            dayCell.classList.add('available');
+          }
+
+          if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            dayCell.classList.add('today');
+          }
+
+          calendar.appendChild(dayCell);
+        }
+      }
+
+      document.getElementById('prevMonth').addEventListener('click', () => {
+        currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+        updateCalendar(currentMonth, currentYear);
+      });
+
+      document.getElementById('nextMonth').addEventListener('click', () => {
+        currentMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+        currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+        updateCalendar(currentMonth, currentYear);
+      });
+
+      updateCalendar(currentMonth, currentYear);
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venue Availability</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+    .calendar-container {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-left:6rem ;
+      margin-right: 6rem;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+    .day {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .available {
+      background-color: lightgreen;
+    }
+    .scheduled {
+      background-color: lightcoral;
+    }
+    .pending {
+      background-color: rgb(241, 241, 79);
+    }
+    .today {
+      border: 2px solid blue;
+    }
+    .modal-header, .modal-body {
+      background-color: #f7f7f7;
+    }
+    .legend-container {
+      margin-top: 20px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .legend-available {
+      background-color: lightgreen;
+    }
+    .legend-scheduled {
+      background-color: lightcoral;
+    }
+    .legend-pending {
+      background-color: rgb(241, 241, 79);
+    }
+    .info-text {
+      background-color: #f9f9f9;
+      border-left: 4px solid #007bff;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center my-4">Venue Availability</h1>
+    <!-- <div id="venue-list" class="mb-4">
+      <h2>Available Dates</h2>
+      <ul>
+        <% events.forEach(event => { %>
+          <li>
+            <strong>Date:</strong> <%= new Date(event.date).toDateString() %><br>
+            <strong>Availability:</strong> <%= event.approval_status === 'Approved' ? 'Scheduled' : 'Pending Approval' %><br>
+            <strong>Name:</strong> <%= event.name %><br>
+            <strong>Room type:</strong> <%= event.roomtype %>
+          </li>
+        <% }); %>
+      </ul>
+    </div> -->
+    <div class="legend-container">
+      <div class="alert alert-info" role="alert">
+        <div class="legend-item">
+          <div class="legend-color legend-available"></div>
+          <span>Green indicates the event is scheduled but not yet approved.</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color legend-scheduled"></div>
+          <span>Red indicates the event is scheduled and the day is not available.</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color legend-pending"></div>
+          <span>Yellow indicates pending approval.</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-text">
+      <i class="fas fa-info-circle"></i>
+      By clicking on a date, you will get information about the event and rooms occupied.
+    </div>
+  </div>
+    <div class="calendar-container">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <button id="prevMonth" class="btn btn-primary"><i class="fas fa-chevron-left"></i></button>
+        <h2 id="monthYear"></h2>
+        <button id="nextMonth" class="btn btn-primary"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div id="calendar" class="calendar"></div>
+    </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="eventDetails"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const events = <%- JSON.stringify(events) %>;
+      const availabilityDictionary = {};
+      events.forEach(event => {
+        const date = new Date(event.date).toDateString();
+        let availability;
+        if (event.approval_status === 'Approved') {
+          availability = 'scheduled';
+        } else {
+          availability = 'pending';
+        }
+        const details = `Name: ${event.name}, Room: ${event.roomtype}`;
+        availabilityDictionary[date] = { availability, details };
+      });
+
+      const calendar = document.getElementById('calendar');
+      const monthYear = document.getElementById('monthYear');
+      const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+      const eventDetails = document.getElementById('eventDetails');
+
+      let today = new Date();
+      let currentMonth = today.getMonth();
+      let currentYear = today.getFullYear();
+
+      function updateCalendar(month, year) {
+        calendar.innerHTML = '';
+        monthYear.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+
+        const firstDay = new Date(year, month).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+          calendar.appendChild(document.createElement('div'));
+        }
+
+        for (let i = 1; i <= daysInMonth; i++) {
+          const dayCell = document.createElement('div');
+          dayCell.classList.add('day');
+          dayCell.textContent = i;
+
+          const date = new Date(year, month, i).toDateString();
+          const eventInfo = availabilityDictionary[date];
+          if (eventInfo) {
+            dayCell.classList.add(eventInfo.availability === 'scheduled' ? 'scheduled' : 'pending');
+            dayCell.addEventListener('click', () => {
+              eventDetails.textContent = eventInfo.details;
+              eventModal.show();
+            });
+          } else {
+            dayCell.classList.add('available');
+          }
+
+          if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            dayCell.classList.add('today');
+          }
+
+          calendar.appendChild(dayCell);
+        }
+      }
+
+      document.getElementById('prevMonth').addEventListener('click', () => {
+        currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+        updateCalendar(currentMonth, currentYear);
+      });
+
+      document.getElementById('nextMonth').addEventListener('click', () => {
+        currentMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+        currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+        updateCalendar(currentMonth, currentYear);
+      });
+
+      updateCalendar(currentMonth, currentYear);
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

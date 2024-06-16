@@ -26,35 +26,35 @@
             color: #EAF8BF;
             font-size: 1.6rem;
             line-height: 1.4;
-            
         }
+
         .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(90deg, #001D4A, #00C6FF);
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #001D4A, #00C6FF);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
 
-.navbar a {
-    text-decoration: none;
-    color: white;
-    margin: 0 1.5rem;
-    font-size: 1.5rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            margin: 0 1.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
 
-.navbar a:hover {
-    color: #ffcc00;
-    transform: scale(1.1);
-}
+        .navbar a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
 
         .card-filter {
             width: 80%;
@@ -108,7 +108,6 @@
             gap: 3rem;
             width: 100%;
             justify-content: center;
-           
         }
 
         .card-body {
@@ -117,7 +116,7 @@
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
-            max-width: 32rem;
+            width: calc(33.33% - 4.8rem);
             margin: 2.4rem;
         }
 
@@ -184,7 +183,8 @@
             }
 
             .card-body {
-                max-width: 28rem;
+                width: calc(50% - 4.8rem);
+                max-width: none;
             }
 
             .card-title {
@@ -210,7 +210,7 @@
             }
 
             .card-body {
-                max-width: 25rem;
+                width: calc(50% - 3.5rem);
             }
 
             .card-title {
@@ -247,7 +247,7 @@
             }
 
             .card-body {
-                max-width: 22rem;
+                width: calc(50% - 2.4rem);
             }
 
             .card-title {
@@ -283,8 +283,12 @@
                 padding: 0.4rem 1rem;
             }
 
+            .grid {
+                gap: 1rem;
+            }
+
             .card-body {
-                max-width: 100%;
+                width: calc(100% - 2rem);
                 margin: 1.5rem 0;
             }
 
@@ -304,36 +308,34 @@
 </head>
 <body>
 <div class="navbar">
-    <a href="upcomingevents.html">Upcoming Events</a>
-    <a href="venueavailability.html">Venue Availability</a>
-    <a href="requestanevent.html">Request an Event</a>
-    <a href="studash.html">Go Back</a>
+    <a href="/dashboard/student">Go Back</a>
 </div>
 <section class="card-filter">
     <div class="filters">
         <ul>
             <li class="btn-list active" role="button" data-filter="*">All</li>
-            <li class="btn-list" data-filter=".CodeCell">CodeCell</li>
-            <li class="btn-list" data-filter=".IETE">IETE</li>
-            <li class="btn-list" data-filter=".CodeStorm">CodeStorm</li>
-            <li class="btn-list" data-filter=".RCTSEC">RCTSEC</li>
+            <% committees.forEach(committee => { %>
+                <li class="btn-list" data-filter=".<%= committee._id %>"><%= committee.name %></li>
+            <% }); %>
         </ul>
     </div>
+    
     <div class="filters-content">
         <div class="row grid">
             <% events.forEach(event => { %>
-            <div class="card-body item <%= event.committee_id %>">
-                <div class="card-image">
-                    <img src="<%=event.image.url%>">
-                    <!-- <img src="<%= event.image ? event.image : 'https://th.bing.com/th/id/OIP.Ny0KU2cxJyjClFGP1K-dmAAAAA?rs=1&pid=ImgDetMain' %>" alt="Event Image" /> -->
+                <% const committee = committees.find(c => c._id.toString() === event.committee_id.toString()); %>
+                <div class="card-body item <%= committee._id %>">
+                    <div class="card-image">
+                        <img src="<%= event.image.url %>" alt="<%= event.name %>">
+                    </div>
+                    <div class="card-content">
+                        <p class="card-title"><%= event.name %></p>
+                        <p class="card-desc"><%= event.description %></p>
+                        <p class="card-date"><%= new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                        <p class="card-committee">Committee: <%= committee.name %></p>
+                    </div>
+                    <a href="/student/registration"><button class="btn-register">Register</button></a>
                 </div>
-                <div class="card-content">
-                    <p class="card-title"><%= event.name %></p>
-                    <p class="card-desc"><%= event.description %></p>
-                    <p class="card-date"><%= new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
-                </div>
-                <a href="/student/registration"><button class="btn-register">Register</button></a>
-            </div>
             <% }) %>
         </div>
     </div>
