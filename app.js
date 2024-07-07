@@ -76,6 +76,10 @@ const sessionOptions = {
   }
 };
 
+// Middleware to parse request bodies
+app.use(express.json()); // For parsing application/json
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+
 app.use(session(sessionOptions));
 app.use(flash());
 app.use(passport.initialize());
@@ -262,135 +266,116 @@ app.get("/", (req, res) => {
   // Committee dashboard features
   app.get("/committee/eventlist", authRole('committee'), async (req, res) => {
     res.render("requestevent.ejs");
-  })
-  
-  app.post('/send_email', authRole('committee'), upload.single("event[image]"), async (req, res) => {
-    try {
-      const userCommitteeId = req.user.committeeName;
-      const url = req.file.path;
-      const filename = req.file.filename;
-      const event = new Event({
-        committee_id: userCommitteeId,
-        name: req.body.name,
-        description: req.body.description,
-        date: req.body.date,
-        occupancy: req.body.occupancySize,
-        roomtype: req.body.roomType,
-        image: { url, filename }
-      });
-  
-      await event.save();
-      req.flash("success", "Event request submitted successfully");
-      res.redirect("/dashboard/committee");
-    } catch (error) {
-      console.error('Error saving event:', error);
-      req.flash("error", "Error saving event");
-      res.redirect("/dashboard/committee");
-    }
   });
   
-  // Venue availability system
-  app.get("/committee/venue", authRole('committee'), async (req, res) => {
-    try {
-      const events = await Event.find({});
-      res.render('venue.ejs', { events: events });
-    } catch (err) {
-      console.error('Error fetching events:', err);
-      req.flash("error", "Error fetching events");
-      res.redirect("/dashboard/committee");
-    }
+  app.post('/committee/eventlist', authRole('committee'), upload.single('image'), async (req, res) => {
+    const { name, description, date, venue } = req.body;
+    const userId = req.user._id;
+    const user = await User.findById(userId).populate('committeeName').exec();
+    const committeeName = user.committeeName;
+    const committeeId = committeeName._id;
+  
+    const event = new Event({
+      name,
+      description,
+      date,
+      venue,
+      committee_id: committeeId,
+      committee_name: committeeName.name,
+      image: req.file.path // Assuming the uploaded file path is stored in req.file.path
+    });
+  
+    await event.save();
+    res.redirect("/dashboard/committee");
   });
   
-  app.get('/events', async (req, res) => {
-    try {
-      const events = await Event.find();
-      res.render('dashboardcommittee.ejs', { events });
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      req.flash("error", "Error fetching events");
-      res.redirect("/");
-    }
+  app.get("/event/:id", async (req, res) => {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    res.render("eventdetails.ejs", { event: event });
   });
   
-  app.get('/events/:eventId', async (req, res) => {
-    const { eventId } = req.params;
+  app.get("/committee/events/requests", authRole('committee'), async (req, res) => {
     try {
-      const event = await Event.findById(eventId);
-      if (!event) {
-        req.flash("error", "Event not found");
-        return res.status(404).redirect('/');
+      const userId = req.user._id;
+      const user = await User.findById(userId).populate('committeeName').exec();
+  
+      if (!user.committeeName) {
+        req.flash("error", "No committee assigned to the user");
+        return res.status(400).redirect('/');
       }
-      res.render('show', { event });
+  
+      const committeeId = user.committeeName._id;
+      const events = await Event.find({ committee_id: committeeId });
+  
+      res.render('eventrequests.ejs', { curruser: user, events });
     } catch (error) {
-      console.error('Error fetching event:', error);
-      req.flash("error", "Error fetching event");
+      console.error('Error fetching event requests:', error);
+      req.flash("error", "Error fetching event requests");
       res.redirect('/');
     }
   });
   
-  // Route for faculty dashboard
-  app.get("/dashboard/faculty", authRole('faculty'), async (req, res) => {
-    try {
-      const events = await Event.find();
-      res.render('dashboardfaculty', { events });
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      req.flash("error", "Error fetching events");
-      res.redirect('/');
-    }
+  app.get("/admin", authRole('admin'), async (req, res) => {
+    const students = await User.find({ role: "student" });
+    res.render("admin.ejs", { students: students });
   });
   
-  // Approval system
-  app.post('/events/:eventId/approval', authRole('faculty'), async (req, res) => {
-    const { eventId } = req.params;
-    const { approvalStatus } = req.body;
-    try {
-      const event = await Event.findById(eventId);
-      if (!event) {
-        req.flash("error", "Event not found");
-        return res.status(404).redirect("/dashboard/faculty");
-      }
-  
-      event.approval_status = approvalStatus;
-      await event.save();
-      req.flash("success", "Event approval status updated successfully");
-      res.redirect("/dashboard/faculty");
-    } catch (error) {
-      console.error('Error updating approval status:', error);
-      req.flash("error", "Error updating approval status");
-      res.redirect("/dashboard/faculty");
-    }
+  app.get("/committees", authRole('admin'), async (req, res) => {
+    const committees = await Committee.find({});
+    res.render("committee.ejs", { committees: committees });
   });
   
-  // Search for event in database
-  app.get('/search', async (req, res) => {
-    try {
-      const searchTerm = req.query.term;
-      const searchResults = await Event.find({
-        $or: [
-          { name: { $regex: searchTerm, $options: 'i' } },
-          { description: { $regex: searchTerm, $options: 'i' } }
-        ]
-      });
-      res.json(searchResults);
-    } catch (error) {
-      console.error('Error performing search:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
+  app.post('/committees', authRole('admin'), upload.single('image'), async (req, res) => {
+    const { name, description, contact_email, contact_name, facebook, twitter, linkedin, instagram } = req.body;
+  
+    const committee = new Committee({
+      name,
+      description,
+      contact_email,
+      contact_name,
+      facebook,
+      twitter,
+      linkedin,
+      instagram,
+      image: req.file.path
+    });
+  
+    await committee.save();
+    res.redirect('/committees');
   });
   
-  // ERROR HANDLING
-  app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "PAGE NOT FOUND !"));
+  app.get("/committees/:id", authRole('admin'), async (req, res) => {
+    const { id } = req.params;
+    const committee = await Committee.findById(id);
+    res.render("committeeDetails.ejs", { committee: committee });
   });
   
-  // CUSTOM ERROR
+  app.post("/committees/:id/delete", authRole('admin'), async (req, res) => {
+    const { id } = req.params;
+    await Committee.findByIdAndDelete(id);
+    res.redirect("/committees");
+  });
+  
+  app.get("/login", (req, res) => {
+    res.render("login.ejs");
+  });
+  
+  app.get("/register", async (req, res) => {
+    res.render("register.ejs");
+  });
+  
+  // Error Handling
+  app.use((req, res, next) => {
+    const err = new ExpressError("Page Not Found", 404);
+    next(err);
+  });
+  
   app.use((err, req, res, next) => {
-    let { statusc = "500", message = "Something went wrong" } = err;
-    res.status(statusc).render("error.ejs", { message });
+    const { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).send(message);
   });
   
-  // PORT
-  app.listen(6009, () => {
-    console.log("Server is listening to port 6009");
+  app.listen(3000, () => {
+    console.log("Listening on port 3000");
   });
