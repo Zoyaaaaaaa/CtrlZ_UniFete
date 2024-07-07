@@ -19,13 +19,23 @@ const userRouter = require("./routes/user.js");
 const Feedback = require("./models/feedback.js");
 const { error } = require('console');
 const authRole = require("./authRole.js");
-var http = require('http');
-var server = http.Server(app);
-var nodemailer = require('nodemailer');
+const http = require('http');
+const server = http.Server(app);
+const nodemailer = require('nodemailer');
 const multer = require('multer');
 const { storage } = require('./cloudConfig.js');
-const upload = multer({ storage })
-const dbUrl = process.env.ATLASDB_URL;
+const upload = multer({ storage });
+const dbUrl = process.env.ATLASDB_URL || MONGO_URL; // Use local URL if environment variable is not set
+
+if (!dbUrl) {
+  console.error("Error: MongoDB connection URL is not set in environment variables.");
+  process.exit(1);
+}
+
+if (!process.env.SECRET) {
+  console.error("Error: Secret for session is not set in environment variables.");
+  process.exit(1);
+}
 
 // MONGODB SET UP
 async function main() {
@@ -37,17 +47,10 @@ async function main() {
     console.log("MongoDb is successfully connected");
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
+    process.exit(1); // Exit process if MongoDB connection fails
   }
 }
 main();
-
-// EJS and Static Files Setup
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.engine("ejs", ejsMate);
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")));
 
 // Session Store Setup
 const store = MongoStore.create({
@@ -58,8 +61,9 @@ const store = MongoStore.create({
   touchAfter: 24 * 3600,
 });
 store.on("error", (e) => {
-  console.log("ERROR IN MONGOSTORE!", e);
+  console.error("ERROR IN MONGOSTORE!", e);
 });
+
 const sessionOptions = {
   store,
   secret: process.env.SECRET,
@@ -71,6 +75,7 @@ const sessionOptions = {
     httpOnly: true,
   }
 };
+
 app.use(session(sessionOptions));
 app.use(flash());
 app.use(passport.initialize());
